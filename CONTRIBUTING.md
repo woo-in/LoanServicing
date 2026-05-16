@@ -16,16 +16,17 @@
 | 스타일 수정 | `style/{설명}` | `style/header-layout` |
 | 리팩토링 | `refactor/{설명}` | `refactor/auth-module` |
 | 테스트 | `test/{설명}` | `test/add-login-spec` |
+| 성능 개선 | `perf/{설명}` | `perf/loan-calc-optimize` |
+| CI 설정 | `ci/{설명}` | `ci/add-github-actions` |
 
 - 영어 소문자 + 하이픈(`-`) 사용
-- 단어는 간결하게 (최대 3~4단어)
+- 단어는 간결하게 
 
 ---
 
 ## 커밋 메시지 컨벤션
 
 [Conventional Commits](https://www.conventionalcommits.org/) 스펙을 따릅니다.
-`commitlint`가 자동으로 형식을 검사합니다.
 
 ### 형식
 
@@ -54,16 +55,12 @@
 ### 예시
 
 ```
-feat(auth): 소셜 로그인 기능 추가
-
-Google OAuth2를 이용한 소셜 로그인을 구현합니다.
-로그인 성공 시 JWT 토큰을 발급합니다.
-
+feat: 소셜 로그인 기능 추가
 Closes #12
 ```
 
 ```
-fix(button): 모바일에서 클릭 이벤트 미작동 수정
+fix: 모바일에서 클릭 이벤트 미작동 수정
 ```
 
 ---
@@ -71,7 +68,9 @@ fix(button): 모바일에서 클릭 이벤트 미작동 수정
 ## Pull Request 규칙
 
 - PR은 하나의 목적만 담습니다 (기능 하나, 버그 하나)
-- PR 제목은 커밋 컨벤션 형식을 따릅니다
+- PR 제목 형식: `[#이슈번호] type: 작업 내용`
+  - 예시: `[#1] feat: 대출 신청 API 구현`
+  - 예시: `[#12] fix: 이자율 계산 오류 수정`
 - 최소 1명의 승인(Approve) 이후 merge 가능합니다
 - 리뷰어는 48시간 내 리뷰를 완료합니다
 - merge 방식은 **Squash and Merge**를 기본으로 합니다
@@ -80,7 +79,6 @@ fix(button): 모바일에서 클릭 이벤트 미작동 수정
 
 ## 이슈 작성 규칙
 
-- 버그 리포트, 기능 요청은 각 템플릿을 사용합니다
+- 버그 리포트, 기능 요청 등 각 템플릿을 사용합니다
 - 이슈 제목은 명확하게 작성합니다
 - 담당자(Assignee)와 라벨을 반드시 지정합니다
-

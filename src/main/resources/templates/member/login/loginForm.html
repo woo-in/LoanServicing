@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|#{bankName} - 로그인|">우인은행 - 로그인</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 400px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-shape-container {
+            position: relative;
+            width: 35px;
+            height: 25px;
+            margin-right: 10px;
+        }
+        .circle-1, .circle-2 {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+        .circle-1 {
+            background-color: #4a90e2;
+            top: 0;
+            left: 0;
+        }
+        .circle-2 {
+            background-color: #74ebd5;
+            opacity: 0.8;
+            top: 0;
+            right: 0;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .input-field {
+            margin-bottom: 25px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .input-field input.error {
+            border-color: #dc3545;
+        }
+
+        .field-error {
+            display: block;
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .global-error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .login-button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 16px;
+            font-size: 18px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-button:hover {
+            background-color: #357ABD;
+        }
+
+        .signup-link {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            padding: 16px;
+            font-size: 18px;
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+        .signup-link:hover {
+            background-color: #bdbdbd;
+        }
+
+        .forgot-password {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">
+        <div class="logo-shape-container">
+            <div class="circle-1"></div>
+            <div class="circle-2"></div>
+        </div>
+        <div class="logo-text" th:text="#{bankName}">우인은행</div>
+    </div>
+
+    <form th:action="@{/login}" th:object="${loginRequest}" method="post" novalidate>
+
+        <input type="hidden" name="redirectUrl" th:value="${redirectUrl}" />
+
+        <div class="global-error" th:if="${#fields.hasGlobalErrors()}">
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+        </div>
+
+        <div class="input-field">
+            <input type="text" th:field="*{username}" placeholder="아이디" th:classappend="${#fields.hasErrors('username')} ? 'error' : ''">
+            <span class="field-error" th:errors="*{username}"></span>
+        </div>
+        <div class="input-field">
+            <input type="password" th:field="*{password}" placeholder="비밀번호" th:classappend="${#fields.hasErrors('password')} ? 'error' : ''">
+            <span class="field-error" th:errors="*{password}"></span>
+        </div>
+        <button type="submit" class="login-button">로그인</button>
+    </form>
+
+    <a th:href="@{/signup}" class="signup-link">회원가입</a>
+
+    <div class="forgot-password">
+        비밀번호를 잊어버리셨나요? <a href="#">여기서 찾으세요.</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+package bankapp.loan.shared.product.service;
+
+
+import bankapp.loan.shared.product.model.InterestRateType;
+import bankapp.loan.shared.product.web.request.InterestRateTypeRequest;
+
+import java.util.List;
+
+
+/**
+ * 금리 유형(Interest Rate Type) 관리
+ */
+public interface InterestRateTypeService {
+
+
+    /**
+     * 새로운 금리 유형을 시스템에 등록(저장)합니다.
+     *
+     * @param interestRateTypeRequest 저장할 금리 유형 엔티티
+     */
+    void saveInterestRateType(InterestRateTypeRequest interestRateTypeRequest) ;
+
+
+    /**
+     * 기본이 되는 금리 종류를 시스템에 저장
+     */
+    void saveDefaultInterestRateType();
+
+    /**
+     * 시스템에 등록된 모든 금리 유형 목록을 조회합니다.
+     *
+     * @return 전체 금리 유형 리스트
+     */
+    List<InterestRateType> findAllTypes();
+
+    /**
+     * 주어진 ID 목록에 해당하는 금리 유형들을 조회합니다.
+     * @param ids 조회할 금리 유형의 ID 리스트
+     * @return ID에 매칭되는 금리 유형 리스트 (존재하지 않는 ID는 제외됨)
+     */
+    List<InterestRateType> findAllById(List<Long> ids);
+
+
+    /**
+     * typeName 에 해당하는 금리유형 엔티티 반환
+     * @param typeName 조회할 금리 유형 이름
+     * @return 금리 유형 엔티티
+     */
+    InterestRateType findByTypeName(String typeName);
+}

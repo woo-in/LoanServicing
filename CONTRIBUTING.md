@@ -35,7 +35,7 @@
 ### 형식
 
 ```
-<type>(<scope>): <subject>
+<type>: <subject>
 
 [body]
 
@@ -60,6 +60,7 @@
 
 ```
 feat: 소셜 로그인 기능 추가
+Closes #12
 ```
 
 ```

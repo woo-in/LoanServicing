@@ -31,4 +31,10 @@
         WHERE login_id = #{loginId}
     </select>
 
+    <select id="existsById" parameterType="long" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
+
 </mapper>

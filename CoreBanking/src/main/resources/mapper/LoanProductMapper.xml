@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.corebanking.domain.product.repository.LoanProductMapper">
+
+    <resultMap id="loanProductResultMap" type="hello.corebanking.domain.product.entity.LoanProduct">
+        <id     property="loanProductId"  column="loan_product_id"/>
+        <result property="name"           column="name"/>
+        <result property="additionalRate" column="additional_rate"/>
+        <result property="createdAt"      column="created_at"/>
+        <result property="updatedAt"      column="updated_at"/>
+        <association property="interestType" javaType="hello.corebanking.domain.product.entity.InterestType">
+            <id     property="interestTypeId" column="interest_type_id"/>
+            <result property="name"           column="interest_type_name"/>
+        </association>
+        <association property="repaymentMethod" javaType="hello.corebanking.domain.product.entity.RepaymentMethod">
+            <id     property="repaymentMethodId" column="repayment_method_id"/>
+            <result property="name"              column="repayment_method_name"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="hello.corebanking.domain.product.entity.LoanProduct"
+            useGeneratedKeys="true" keyProperty="loanProductId">
+        INSERT INTO loan_product (interest_type_id, repayment_method_id, name, additional_rate)
+        VALUES (#{interestType.interestTypeId}, #{repaymentMethod.repaymentMethodId}, #{name}, #{additionalRate})
+    </insert>
+
+    <select id="findById" parameterType="long" resultMap="loanProductResultMap">
+        SELECT
+            lp.loan_product_id,
+            lp.name,
+            lp.additional_rate,
+            lp.created_at,
+            lp.updated_at,
+            it.interest_type_id,
+            it.name   AS interest_type_name,
+            rm.repayment_method_id,
+            rm.name   AS repayment_method_name
+        FROM loan_product lp
+            JOIN interest_type it   ON lp.interest_type_id   = it.interest_type_id
+            JOIN repayment_method rm ON lp.repayment_method_id = rm.repayment_method_id
+        WHERE lp.loan_product_id = #{loanProductId}
+    </select>
+
+    <select id="findAll" resultMap="loanProductResultMap">
+        SELECT
+            lp.loan_product_id,
+            lp.name,
+            lp.additional_rate,
+            lp.created_at,
+            lp.updated_at,
+            it.interest_type_id,
+            it.name   AS interest_type_name,
+            rm.repayment_method_id,
+            rm.name   AS repayment_method_name
+        FROM loan_product lp
+            JOIN interest_type it   ON lp.interest_type_id   = it.interest_type_id
+            JOIN repayment_method rm ON lp.repayment_method_id = rm.repayment_method_id
+        ORDER BY lp.loan_product_id
+    </select>
+
+</mapper>

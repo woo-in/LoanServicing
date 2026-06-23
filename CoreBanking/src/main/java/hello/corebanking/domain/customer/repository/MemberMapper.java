@@ -11,4 +11,5 @@ public interface MemberMapper {
     void insert(Member member);
     Optional<Member> findByLoginId(String loginId);
     boolean existsByLoginId(String loginId);
+    boolean existsById(long memberId);
 }

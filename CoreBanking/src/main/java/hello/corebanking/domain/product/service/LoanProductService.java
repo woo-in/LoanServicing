@@ -17,14 +17,12 @@ import java.util.List;
 public class LoanProductService {
 
     private final LoanProductMapper loanProductMapper;
-    private final InterestTypeService interestTypeService;
-    private final RepaymentMethodService repaymentMethodService;
 
     @Transactional
     public LoanProduct register(int interestTypeId, int repaymentMethodId,
                                 String name, BigDecimal additionalRate) {
-        InterestType interestType = interestTypeService.findById(interestTypeId);
-        RepaymentMethod repaymentMethod = repaymentMethodService.findById(repaymentMethodId);
+        InterestType interestType = InterestType.fromId(interestTypeId);
+        RepaymentMethod repaymentMethod = RepaymentMethod.fromId(repaymentMethodId);
 
         LoanProduct loanProduct = new LoanProduct(interestType, repaymentMethod, name, additionalRate);
         loanProductMapper.insert(loanProduct);

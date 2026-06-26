@@ -4,6 +4,7 @@ import hello.corebanking.domain.product.entity.InterestType;
 import hello.corebanking.domain.product.entity.LoanProduct;
 import hello.corebanking.domain.product.entity.RepaymentMethod;
 import hello.corebanking.domain.product.repository.LoanProductMapper;
+import hello.corebanking.global.exception.InvalidEnumIdException;
 import hello.corebanking.global.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,50 +28,34 @@ class LoanProductServiceTest {
 
     @Mock
     private LoanProductMapper loanProductMapper;
-    @Mock
-    private InterestTypeService interestTypeService;
-    @Mock
-    private RepaymentMethodService repaymentMethodService;
 
     @InjectMocks
     private LoanProductService loanProductService;
 
     @Test
-    @DisplayName("대출상품 등록 시 interestType, repaymentMethod 유효성 검증 후 저장한다")
+    @DisplayName("유효한 id로 대출상품 등록 시 Enum으로 변환 후 저장한다")
     void register() {
-        InterestType interestType = new InterestType("고정금리");
-        RepaymentMethod repaymentMethod = new RepaymentMethod("원리금균등상환");
-        when(interestTypeService.findById(1)).thenReturn(interestType);
-        when(repaymentMethodService.findById(1)).thenReturn(repaymentMethod);
-
-        LoanProduct result = loanProductService.register(1, 1, "주택담보대출", new BigDecimal("0.02000"));
+        LoanProduct result = loanProductService.register(1, 2, "주택담보대출", new BigDecimal("0.02000"));
 
         assertThat(result.getName()).isEqualTo("주택담보대출");
-        assertThat(result.getAdditionalRate()).isEqualTo(new BigDecimal("0.02000"));
-        assertThat(result.getInterestType().getName()).isEqualTo("고정금리");
-        assertThat(result.getRepaymentMethod().getName()).isEqualTo("원리금균등상환");
+        assertThat(result.getInterestType()).isEqualTo(InterestType.FIXED);
+        assertThat(result.getRepaymentMethod()).isEqualTo(RepaymentMethod.LEVEL_PAYMENT);
         verify(loanProductMapper).insert(any(LoanProduct.class));
     }
 
     @Test
-    @DisplayName("존재하지 않는 interestTypeId 로 등록 시 NotFoundException 을 던진다")
-    void register_invalidInterestType() {
-        when(interestTypeService.findById(99)).thenThrow(new NotFoundException("이자종류를 찾을 수 없습니다. id=99"));
-
+    @DisplayName("존재하지 않는 interestTypeId 로 등록 시 InvalidEnumIdException 을 던진다")
+    void register_invalidInterestTypeId() {
         assertThatThrownBy(() -> loanProductService.register(99, 1, "주택담보대출", new BigDecimal("0.02000")))
-                .isInstanceOf(NotFoundException.class)
+                .isInstanceOf(InvalidEnumIdException.class)
                 .hasMessageContaining("99");
     }
 
     @Test
-    @DisplayName("존재하지 않는 repaymentMethodId 로 등록 시 NotFoundException 을 던진다")
-    void register_invalidRepaymentMethod() {
-        InterestType interestType = new InterestType("고정금리");
-        when(interestTypeService.findById(1)).thenReturn(interestType);
-        when(repaymentMethodService.findById(99)).thenThrow(new NotFoundException("상환방법을 찾을 수 없습니다. id=99"));
-
+    @DisplayName("존재하지 않는 repaymentMethodId 로 등록 시 InvalidEnumIdException 을 던진다")
+    void register_invalidRepaymentMethodId() {
         assertThatThrownBy(() -> loanProductService.register(1, 99, "주택담보대출", new BigDecimal("0.02000")))
-                .isInstanceOf(NotFoundException.class)
+                .isInstanceOf(InvalidEnumIdException.class)
                 .hasMessageContaining("99");
     }
 
@@ -78,7 +63,7 @@ class LoanProductServiceTest {
     @DisplayName("존재하는 id 조회 시 대출상품을 반환한다")
     void findById_found() {
         LoanProduct loanProduct = new LoanProduct(
-                new InterestType("고정금리"), new RepaymentMethod("원리금균등상환"),
+                InterestType.FIXED, RepaymentMethod.LEVEL_PAYMENT,
                 "주택담보대출", new BigDecimal("0.02000")
         );
         when(loanProductMapper.findById(1L)).thenReturn(Optional.of(loanProduct));
@@ -86,6 +71,7 @@ class LoanProductServiceTest {
         LoanProduct result = loanProductService.findById(1L);
 
         assertThat(result.getName()).isEqualTo("주택담보대출");
+        assertThat(result.getInterestType()).isEqualTo(InterestType.FIXED);
     }
 
     @Test
@@ -102,8 +88,8 @@ class LoanProductServiceTest {
     @DisplayName("전체 조회 시 mapper 에서 받은 목록을 반환한다")
     void findAll() {
         List<LoanProduct> list = List.of(
-                new LoanProduct(new InterestType("고정금리"), new RepaymentMethod("원리금균등상환"), "주택담보대출", new BigDecimal("0.02000")),
-                new LoanProduct(new InterestType("변동금리"), new RepaymentMethod("만기일시상환"), "신용대출", new BigDecimal("0.03000"))
+                new LoanProduct(InterestType.FIXED, RepaymentMethod.LEVEL_PAYMENT, "주택담보대출", new BigDecimal("0.02000")),
+                new LoanProduct(InterestType.VARIABLE, RepaymentMethod.BULLET, "신용대출", new BigDecimal("0.03000"))
         );
         when(loanProductMapper.findAll()).thenReturn(list);
 

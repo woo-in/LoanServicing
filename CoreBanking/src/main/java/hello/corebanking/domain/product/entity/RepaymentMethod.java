@@ -1,20 +1,20 @@
 package hello.corebanking.domain.product.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import hello.corebanking.global.exception.InvalidEnumIdException;
 
-import java.time.LocalDateTime;
+public enum RepaymentMethod {
+    BULLET(1), LEVEL_PAYMENT(2), EQUAL_PRINCIPAL(3);
 
-@Getter
-@NoArgsConstructor
-public class RepaymentMethod {
+    private final int id;
 
-    private int repaymentMethodId;
-    private String name;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    RepaymentMethod(int id) { this.id = id; }
 
-    public RepaymentMethod(String name) {
-        this.name = name;
+    public int getId() { return id; }
+
+    public static RepaymentMethod fromId(int id) {
+        for (RepaymentMethod method : values()) {
+            if (method.id == id) return method;
+        }
+        throw new InvalidEnumIdException("Unknown RepaymentMethod id: " + id);
     }
 }

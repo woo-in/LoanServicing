@@ -36,3 +36,4 @@ public class PrimaryAccountService {
                 .orElseThrow(() -> new NotFoundException("주계좌를 찾을 수 없습니다. memberId=" + memberId));
     }
 }
+

@@ -1,20 +1,20 @@
 package hello.corebanking.domain.product.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import hello.corebanking.global.exception.InvalidEnumIdException;
 
-import java.time.LocalDateTime;
+public enum InterestType {
+    FIXED(1), VARIABLE(2);
 
-@Getter
-@NoArgsConstructor
-public class InterestType {
+    private final int id;
 
-    private int interestTypeId;
-    private String name;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    InterestType(int id) { this.id = id; }
 
-    public InterestType(String name) {
-        this.name = name;
+    public int getId() { return id; }
+
+    public static InterestType fromId(int id) {
+        for (InterestType type : values()) {
+            if (type.id == id) return type;
+        }
+        throw new InvalidEnumIdException("Unknown InterestType id: " + id);
     }
 }

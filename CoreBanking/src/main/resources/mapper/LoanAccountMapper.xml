@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.corebanking.domain.loan.repository.LoanAccountMapper">
+
+    <resultMap id="loanAccountResultMap" type="hello.corebanking.domain.loan.entity.LoanAccount">
+        <id     property="loanAccountId"       column="loan_account_id"/>
+        <result property="loanContractId"      column="loan_contract_id"/>
+        <result property="primaryAccountId"    column="primary_account_id"/>
+        <result property="accountNo"           column="account_no"/>
+        <result property="loanPrincipalBalance" column="loan_principal_balance"/>
+        <result property="monthlyPaymentDay"   column="monthly_payment_day"/>
+        <result property="currentInstallmentNo" column="current_installment_no"/>
+        <result property="createdAt"           column="created_at"/>
+        <result property="updatedAt"           column="updated_at"/>
+    </resultMap>
+
+    <select id="findById" parameterType="long" resultMap="loanAccountResultMap">
+        SELECT loan_account_id, loan_contract_id, primary_account_id,
+               account_no, loan_principal_balance, monthly_payment_day,
+               current_installment_no, created_at, updated_at
+        FROM   loan_account
+        WHERE  loan_account_id = #{loanAccountId}
+    </select>
+
+</mapper>

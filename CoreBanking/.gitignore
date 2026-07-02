@@ -38,3 +38,7 @@ out/
 
 ### Sensitive Properties ###
 **/application-dev.properties
+
+### verify-repayment-calculator script artifacts ###
+scripts/verify-repayment-calculator/venv/
+scripts/verify-repayment-calculator/cases.csv

@@ -19,6 +19,7 @@ public class LoanContract {
     private BigDecimal contractPrincipal;
     private BigDecimal contractAdditionalRate;
     private BigDecimal contractBaseRate;
+    private int totalInstallments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

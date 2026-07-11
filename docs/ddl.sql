@@ -129,6 +129,7 @@ CREATE TABLE loan_contract (
     contract_principal       DECIMAL(23,4) NOT NULL,
     contract_additional_rate DECIMAL(10,5) NOT NULL,
     contract_base_rate       DECIMAL(10,5) NOT NULL,
+    total_installments        INT NOT NULL,
     created_at               DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (loan_contract_id),

@@ -111,6 +111,7 @@
 | 6 | 계약대출원금 | contract_principal | DECIMAL(23,4) | | N | | 계약 시점 확정 원금 (고정값) |
 | 7 | 계약 가산금리 | contract_additional_rate | DECIMAL(10,5) | | N | | 계약 시 확정 가산금리. 단위: % |
 | 8 | 계약 기준금리 | contract_base_rate | DECIMAL(10,5) | | N | | 계약 시 확정 기준금리. 고정금리 시 만기까지 불변, 변동금리 시 초기 기준값. 단위: % |
+| 9 | 총 대출 회차 | total_installments | INT | | N | | 계약 시점 확정 총 상환 회차 |
 
 ### 11. 대출계좌 (loan_account)
 

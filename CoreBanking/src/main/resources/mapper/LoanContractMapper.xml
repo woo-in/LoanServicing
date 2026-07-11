@@ -13,6 +13,7 @@
         <result property="contractPrincipal"      column="contract_principal"/>
         <result property="contractAdditionalRate" column="contract_additional_rate"/>
         <result property="contractBaseRate"       column="contract_base_rate"/>
+        <result property="totalInstallments"      column="total_installments"/>
         <result property="createdAt"              column="created_at"/>
         <result property="updatedAt"              column="updated_at"/>
     </resultMap>
@@ -20,7 +21,7 @@
     <select id="findById" parameterType="long" resultMap="loanContractResultMap">
         SELECT loan_contract_id, loan_product_id, member_id,
                contract_date, maturity_date, contract_principal,
-               contract_additional_rate, contract_base_rate,
+               contract_additional_rate, contract_base_rate, total_installments,
                created_at, updated_at
         FROM   loan_contract
         WHERE  loan_contract_id = #{loanContractId}
@@ -29,7 +30,7 @@
     <select id="findByLoanAccountId" parameterType="long" resultMap="loanContractResultMap">
         SELECT lc.loan_contract_id, lc.loan_product_id, lc.member_id,
                lc.contract_date, lc.maturity_date, lc.contract_principal,
-               lc.contract_additional_rate, lc.contract_base_rate,
+               lc.contract_additional_rate, lc.contract_base_rate, lc.total_installments,
                lc.created_at, lc.updated_at
         FROM   loan_contract lc
                INNER JOIN loan_account la ON la.loan_contract_id = lc.loan_contract_id

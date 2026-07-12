@@ -86,13 +86,13 @@ type: 한국어로 작성된 설명
 
      | 접두사 | 라벨 |
      |---|---|
-     | `[BUG]` | `bug` |
-     | `[DOCS]` | `documentation` |
-     | `[FEAT]` | `enhancement` |
-     | `[LEARN]` | `learn` |
-     | `[TASK]` | `task` |
-     | `[QUESTION]` | `question` |
-     | `[REFACTOR]` | `refactor` |
+     | `[BUG]` | `버그` |
+     | `[DOCS]` | `문서` |
+     | `[FEAT]` | `기능` |
+     | `[LEARN]` | `학습` |
+     | `[TASK]` | `작업` |
+     | `[QUESTION]` | `질문` |
+     | `[REFACTOR]` | `리펙토링` |
    - 본문은 접두사에 대응하는 `.github/ISSUE_TEMPLATE/*.md`의 섹션 구조를 그대로 따른다 (템플릿마다 섹션 구성이 다르므로 아래 표대로 매칭):
 
      | 접두사 | 템플릿 파일 | 섹션 구성 |
